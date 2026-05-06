@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>900</width>
+    <height>560</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>ALTUS - Médicos</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QLabel" name="lbl_titulo">
+      <property name="styleSheet">
+       <string notr="true">font-size: 28px; font-weight: 700; color: #008f8c;</string>
+      </property>
+      <property name="text">
+       <string>Gestão de Médicos</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="topActions">
+      <item>
+       <widget class="QPushButton" name="btn_usuarios">
+        <property name="text">
+         <string>Usuários</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_usuarios2">
+        <property name="text">
+         <string>Usuários</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_medicos">
+        <property name="text">
+         <string>Médicos</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_medicos2">
+        <property name="text">
+         <string>Médicos</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_voltar">
+        <property name="text">
+         <string>Voltar</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_sair">
+        <property name="text">
+         <string>Sair</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="mainActions">
+      <item>
+       <widget class="QPushButton" name="btn_cadastro">
+        <property name="minimumSize">
+         <size>
+          <width>260</width>
+          <height>120</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Cadastrar / Editar Médico</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_listagem">
+        <property name="minimumSize">
+         <size>
+          <width>260</width>
+          <height>120</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Listagem de Médicos</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1100</width>
+    <height>650</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>ALTUS - Pagamentos</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QLabel" name="lbl_titulo">
+      <property name="styleSheet">
+       <string notr="true">font-size: 28px; font-weight: 700; color: #008f8c;</string>
+      </property>
+      <property name="text">
+       <string>Pagamentos</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="navLayout">
+      <item>
+       <widget class="QPushButton" name="btn_usuarios">
+        <property name="text">
+         <string>Usuários</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_usuarios2">
+        <property name="text">
+         <string>Usuários</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_medicos">
+        <property name="text">
+         <string>Médicos</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_medicos2">
+        <property name="text">
+         <string>Médicos</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_voltar">
+        <property name="text">
+         <string>Voltar</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_sair">
+        <property name="text">
+         <string>Sair</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="filtersLayout">
+      <item>
+       <widget class="QLineEdit" name="txt_id_user_2">
+        <property name="placeholderText">
+         <string>ID pagamento</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="txt_id_user">
+        <property name="placeholderText">
+         <string>ID usuário</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="cmb_tipo">
+        <item>
+         <property name="text">
+          <string>Todos</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>pendente</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>aprovado</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>rejeitado</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="cmb_plano">
+        <item>
+         <property name="text">
+          <string>Todos</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>49.00</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>99.00</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>199.00</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_pesquisar">
+        <property name="text">
+         <string>Pesquisar</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QTableWidget" name="tb_pagamentos"/>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

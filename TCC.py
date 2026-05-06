@@ -1,3 +1,4 @@
+import os
 import mysql.connector
 from PyQt5 import uic, QtWidgets
 from PyQt5.QtWidgets import QMessageBox, QFileDialog
@@ -5,14 +6,37 @@ from PyQt5.QtWidgets import QFileDialog
 from PyQt5.QtGui import QPixmap, QPainter, QBrush, QPainterPath
 from PyQt5.QtCore import Qt
 from datetime import datetime
+
+
+def load_env_file(path=".env"):
+    if not os.path.exists(path):
+        return
+
+    with open(path, "r", encoding="utf-8") as env_file:
+        for line in env_file:
+            line = line.strip()
+            if not line or line.startswith("#") or "=" not in line:
+                continue
+
+            key, value = line.split("=", 1)
+            key = key.strip()
+            value = value.strip().strip('"').strip("'")
+            os.environ.setdefault(key, value)
+
+
+load_env_file()
+
+
+def get_env(name, default=""):
+    return os.getenv(name, default)
 # ===================== CONEXÃO =======================
 def connect():
     return mysql.connector.connect(
-        user='root',
-        password='',
-        host='localhost',
-        port='3306',
-        database='bd_tcc_g1s'
+        user=get_env("DB_USER", "root"),
+        password=get_env("DB_PASSWORD", ""),
+        host=get_env("DB_HOST", "localhost"),
+        port=int(get_env("DB_PORT", "3306")),
+        database=get_env("DB_NAME", "bd_tcc_g1s")
     )
 
 # ===================== LOGIN =======================
@@ -26,8 +50,8 @@ def login():
     cursor = conn.cursor()
 
     try:
-        sql = f"SELECT * FROM tb_login WHERE email = '{email}' AND senha = '{senha}' AND tipo = 'adm'"
-        cursor.execute(sql)
+        sql = "SELECT * FROM tb_login WHERE email = %s AND senha = %s AND tipo = %s"
+        cursor.execute(sql, (email, senha, "adm"))
         resultado = cursor.fetchone() 
 
         if resultado:  
@@ -423,8 +447,8 @@ def delete_exercicio():
     try:
         conn = connect()
         cursor = conn.cursor()
-        sql = f"DELETE FROM tb_exercicios WHERE id_ex = '{id}'"
-        cursor.execute(sql)
+        sql = "DELETE FROM tb_exercicios WHERE id_ex = %s"
+        cursor.execute(sql, (id,))
         conn.commit()
         edit_window.txt_pesquisar.clear()
         edit_window.txt_nome.clear()
@@ -483,16 +507,21 @@ def pesquisar_tabela_progresso():
         WHERE 1=1
         """
 
+        params = []
         if id_user:
-            sql += f" AND p.id_user = '{id_user}'"
+            sql += " AND p.id_user = %s"
+            params.append(id_user)
         if id_ex:
-            sql += f" AND p.id_ex = '{id_ex}'"
+            sql += " AND p.id_ex = %s"
+            params.append(id_ex)
         if nome:
-            sql += f" AND u.nome LIKE '%{nome}%'"
+            sql += " AND u.nome LIKE %s"
+            params.append(f"%{nome}%")
         if autonomia and autonomia != "Todos":
-            sql += f" AND p.autonomia = '{autonomia}'"
+            sql += " AND p.autonomia = %s"
+            params.append(autonomia)
 
-        cursor.execute(sql)
+        cursor.execute(sql, params)
         resultados = cursor.fetchall()
 
         menu_prog.tb_progresso.setRowCount(0)
@@ -519,7 +548,7 @@ def pesquisar_tabela_progresso():
             conn.close()
 
 #=====================PAGAMENTOS============================
-import os, sys, subprocess
+import sys, subprocess
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QMessageBox
 from PyQt5 import QtCore, QtGui     
@@ -679,18 +708,23 @@ def pesquisar_list_pagamento():
         WHERE 1=1
         """
 
+        params = []
         if id_pagamento:
-            sql += f" AND p.id_pagamento = '{id_pagamento}'"
+            sql += " AND p.id_pagamento = %s"
+            params.append(id_pagamento)
         if id_user:
-            sql += f" AND p.id_user = '{id_user}'"
+            sql += " AND p.id_user = %s"
+            params.append(id_user)
         if status and status != "Todos":
-            sql += f" AND p.status = '{status}'"
+            sql += " AND p.status = %s"
+            params.append(status)
         if plano and plano != "Todos":
-            sql += f" AND p.valor = '{plano}'"
+            sql += " AND p.valor = %s"
+            params.append(plano)
 
         sql += " ORDER BY p.criado_em DESC"
 
-        cursor.execute(sql)
+        cursor.execute(sql, params)
         resultados = cursor.fetchall()
 
         menu_pag.tb_pagamentos.setRowCount(0)
@@ -808,15 +842,20 @@ def enviar_email_status(id_user, status):
         email_responsavel = resultado[0]
 
         # Configuração SMTP (igual ao PHP)
-        remetente = "contatofelipewmammana@gmail.com"
-        senha = "wbhp jekz yzgm behz"  # senha de app do Gmail
-        servidor_smtp = "smtp.gmail.com"
-        porta_smtp = 587
+        remetente = get_env("SMTP_USER")
+        senha = get_env("SMTP_PASSWORD")
+        servidor_smtp = get_env("SMTP_HOST", "smtp.gmail.com")
+        porta_smtp = int(get_env("SMTP_PORT", "587"))
+        email_from = get_env("SMTP_FROM", remetente)
+
+        if not remetente or not senha:
+            print("SMTP nao configurado. Email de status nao enviado.")
+            return
 
         # Criar o email
         msg = MIMEMultipart("alternative")
         msg["Subject"] = f"Pagamento {status.capitalize()}"
-        msg["From"] = "noreply@altus.com.br"
+        msg["From"] = email_from
         msg["To"] = email_responsavel
 
         corpo_html = f"""
@@ -835,7 +874,7 @@ def enviar_email_status(id_user, status):
         with smtplib.SMTP(servidor_smtp, porta_smtp) as server:
             server.starttls()
             server.login(remetente, senha)
-            server.sendmail(remetente, email_responsavel, msg.as_string())
+            server.sendmail(email_from, email_responsavel, msg.as_string())
 
         print(f"✅ Email enviado para {email_responsavel} - Status: {status}")
 
@@ -907,19 +946,25 @@ def pesquisar_list_exercicio():
         cursor = conn.cursor()
         sql = "SELECT id_ex, nome, grau, tipos, arquivo, link FROM tb_exercicios WHERE 1=1"
 
+        params = []
         if id:
-            sql += f" AND id_ex = '{id}'"
+            sql += " AND id_ex = %s"
+            params.append(id)
         if nome:
-            sql += f" AND nome LIKE '%{nome}%'"
+            sql += " AND nome LIKE %s"
+            params.append(f"%{nome}%")
         if grau and grau != "Todos":
-            sql += f" AND grau = '{grau}'"
+            sql += " AND grau = %s"
+            params.append(grau)
         if arquivos and arquivos != "Todos":
-            sql += f" AND arquivo LIKE '%{arquivos}%'"
+            sql += " AND arquivo LIKE %s"
+            params.append(f"%{arquivos}%")
         if tipos:
             for tipo in tipos.split(","):
-                sql += f" AND tipos LIKE '%{tipo.strip()}%'"
+                sql += " AND tipos LIKE %s"
+                params.append(f"%{tipo.strip()}%")
 
-        cursor.execute(sql)
+        cursor.execute(sql, params)
         resultados = cursor.fetchall()
 
         list_window.tableExercicios.setRowCount(0)
@@ -1050,14 +1095,18 @@ def pesquisar_list_med():
         cursor = conn.cursor()
         sql = "SELECT id_med, nome, data_nascimento, telefone, tipo_especialidade, crn FROM tb_medico WHERE 1=1"
 
+        params = []
         if id:
-            sql += f" AND id_med = '{id}'"
+            sql += " AND id_med = %s"
+            params.append(id)
         if nome:
-            sql += f" AND nome LIKE '%{nome}%'"
+            sql += " AND nome LIKE %s"
+            params.append(f"%{nome}%")
         if tipo and tipo != "Todos":
-            sql += f" AND tipo_especialidade = '{tipo}'"
+            sql += " AND tipo_especialidade = %s"
+            params.append(tipo)
 
-        cursor.execute(sql)
+        cursor.execute(sql, params)
         resultados = cursor.fetchall()
 
         menu_med_list.tb_medicos.setRowCount(0)
@@ -1280,12 +1329,12 @@ def insert_medico():
         conn = connect()
         cursor = conn.cursor()
 
-        cursor.execute(f"SELECT id_med FROM tb_medico WHERE crn = '{crn}'")
+        cursor.execute("SELECT id_med FROM tb_medico WHERE crn = %s", (crn,))
         if cursor.fetchone():
             QMessageBox.warning(menu_med_cad, "CRM existente", "Já existe um médico cadastrado com esse CRM.")
             return
 
-        cursor.execute(f"SELECT id_med FROM tb_login WHERE email = '{email}'")
+        cursor.execute("SELECT id FROM tb_login WHERE email = %s", (email,))
         if cursor.fetchone():
             QMessageBox.warning(menu_med_cad, "Email existente", "Já existe um usuário cadastrado com esse email.")
             return
