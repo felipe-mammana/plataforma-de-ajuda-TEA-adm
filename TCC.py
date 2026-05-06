@@ -7,6 +7,9 @@ from PyQt5.QtGui import QPixmap, QPainter, QBrush, QPainterPath
 from PyQt5.QtCore import Qt
 from datetime import datetime
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+os.chdir(BASE_DIR)
+
 
 def load_env_file(path=".env"):
     if not os.path.exists(path):

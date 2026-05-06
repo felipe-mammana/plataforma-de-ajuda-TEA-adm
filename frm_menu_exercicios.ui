@@ -373,7 +373,7 @@ QPushButton#btn_sair:pressed {
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>icones/altus logo.png</pixmap>
+     <pixmap>icones/logo_altus.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -417,7 +417,7 @@ QPushButton#btn_sair:pressed {
     </property>
     <property name="icon">
      <iconset>
-      <normaloff>icones/icons/adicionar-ficheiro (1).png</normaloff>icones/icons/adicionar-ficheiro (1).png</iconset>
+      <normaloff>icones/add_ex (2).png</normaloff>icones/add_ex (2).png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -542,7 +542,7 @@ QPushButton#btn_sair:pressed {
     </property>
     <property name="icon">
      <iconset>
-      <normaloff>icones/Projeto Remover fundo.png</normaloff>icones/Projeto Remover fundo.png</iconset>
+      <normaloff>icones/edit_ex.png</normaloff>icones/edit_ex.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -573,7 +573,7 @@ QPushButton#btn_sair:pressed {
     </property>
     <property name="icon">
      <iconset>
-      <normaloff>icones/icons/lista.png</normaloff>icones/icons/lista.png</iconset>
+      <normaloff>icones/list_ex.png</normaloff>icones/list_ex.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -685,7 +685,7 @@ QPushButton#btn_sair:pressed {
     border: 2px solid #000000;
     border-radius: 25px;
     background-color: #white;
-    background-image: url(:/imagens/foto.png);
+    background-image: url(icones/user.png);
     background-position: center;
     background-repeat: no-repeat;
 }

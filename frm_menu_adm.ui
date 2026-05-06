@@ -286,7 +286,7 @@ QPushButton#btn_sair:pressed {
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>icones/altus logo.png</pixmap>
+     <pixmap>icones/logo_altus.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -449,7 +449,7 @@ QPushButton:pressed {
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>icones/Ilustração_Sem_Título.PNG</pixmap>
+     <pixmap>icones/logo_altusboneco.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -508,7 +508,7 @@ QPushButton:pressed {
     </property>
     <property name="icon">
      <iconset>
-      <normaloff>icones/growth.png</normaloff>icones/growth.png</iconset>
+      <normaloff>icones/progresso.png</normaloff>icones/progresso.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -539,7 +539,7 @@ QPushButton:pressed {
     </property>
     <property name="icon">
      <iconset>
-      <normaloff>icones/report.png</normaloff>icones/report.png</iconset>
+      <normaloff>icones/relatorio.png</normaloff>icones/relatorio.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -587,7 +587,7 @@ QPushButton:pressed {
     </property>
     <property name="icon">
      <iconset>
-      <normaloff>icones/forma-de-pagamento.png</normaloff>icones/forma-de-pagamento.png</iconset>
+      <normaloff>icones/caderno.png</normaloff>icones/caderno.png</iconset>
     </property>
     <property name="iconSize">
      <size>
