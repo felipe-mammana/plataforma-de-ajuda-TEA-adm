@@ -5,7 +5,7 @@
 
   <p>
     Plataforma administrativa desktop para gestão de usuários, médicos, exercícios, desempenho,
-    pagamentos e relatórios do ecossistema <strong>ALTUS - Apoio ao TEA</strong>.
+    pagamentos e relatórios do ecossistema <strong>ALTUS - Melhorando Habilidades e Transformando Vidas</strong>.
   </p>
 
   <p>
@@ -384,5 +384,5 @@ Não foi detectado arquivo de licença neste repositório.
 
 <div align="center">
   <strong>ALTUS Admin</strong><br>
-  Administração desktop para o ecossistema ALTUS - Apoio ao TEA.
+  Administração desktop para o ecossistema ALTUS - Melhorando Habilidades e Transformando Vidas.
 </div>
